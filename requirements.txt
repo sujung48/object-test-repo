@@ -1,0 +1,23 @@
+# FastAPI & ASGI 서버
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+
+# DB (PostgreSQL, SQLAlchemy, async 지원)  ← psycopg 버전 범위 상향
+SQLAlchemy==2.0.35
+psycopg[binary]>=3.2.2,<3.3
+pymilvus>=2.4
+
+# 요청/응답 처리
+httpx==0.27.2
+pydantic==2.9.2
+
+# YOLO (Ultralytics, PyTorch 기반)
+ultralytics==8.3.10
+torch>=2.8.0
+torchvision>=0.23.0
+
+# 유틸
+python-dotenv==1.0.1
+numpy==1.26.4
+opencv-python==4.10.0.84
+python-multipart==0.0.20
