@@ -1,0 +1,31 @@
+services:
+  milvus:
+    image: milvusdb/milvus:v2.4.7
+    container_name: milvus-standalone
+    command: ["milvus", "run", "standalone"]
+    ports:
+      - "19530:19530"
+      - "9091:9091"
+    ulimits:
+      memlock: -1
+      nofile: 65536
+    volumes:
+      - milvus_data:/var/lib/milvus
+    restart: unless-stopped
+
+  attu:
+    image: zilliz/attu:latest
+    container_name: attu
+    environment:
+      - MILVUS_URL=host.docker.internal:19530   # ← 호스트로 강제
+      - http_proxy=
+      - https_proxy=
+    depends_on:
+      - milvus
+    ports:
+      - "3000:3000"
+    extra_hosts:
+      - host.docker.internal:host-gateway       # ← Mac/리눅스 모두 안전
+
+volumes:
+  milvus_data:
