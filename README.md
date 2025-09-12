@@ -42,3 +42,22 @@ psql -U obuser -h localhost -d db -f db.sql
 psql -h localhost -U obuser -d db
 
 5. DB 명령어 정리
+
+
+############################################
+curl -X POST http://localhost:8000/camera/start   
+curl -X POST http://localhost:8000/save           
+
+
+curl -s "http://localhost:8000/frames/recent?limit=5" | jq .
+n번째 프레임에서 객체 n개가 탐지되어 저장된거 확인
+
+curl -s "http://localhost:8000/objects/recent?limit=5" | jq .
+제일 최근 프레임에서 탐지된 객체 정보 저장된거 확인
+
+curl -s -X POST http://localhost:8000/milvus/upsert/latest | jq . 
+가장 최근 저장된 프레임에서 탐지된 객체중 n개를 milvus에 저장하기
+
+curl -s "http://localhost:8000/milvus/search?topk=5" | jq .
+milvus에서 방금 넣은 객체를 검색했더니 자기 자신이 1등으로 나옴
+더미 임베딩이라 항상 “자기 자신=1위, 거리≈0”만 확인되지만, 실제로 임베딩 모델을 붙이면 “비슷한 객체끼리 가까운 거리”
